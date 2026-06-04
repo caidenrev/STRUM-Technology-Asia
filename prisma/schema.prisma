@@ -1,0 +1,102 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  role      String   @default("Admin") // Super Admin, Admin, Editor, Viewer
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Service {
+  id               Int      @id @default(autoincrement())
+  title            String
+  slug             String   @unique
+  icon             String
+  shortDescription String   @db.Text
+  fullDescription  String   @db.Text
+  coverImage       String   @db.Text
+  gallery          String   @default("[]") @db.Text // JSON string array of image URLs
+  benefits         String   @default("[]") @db.Text // JSON string array of benefits
+  faqs             String   @default("[]") @db.Text // JSON string array of objects {q, a}
+  isActive         Boolean  @default(true)
+  order            Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Activity {
+  id           Int      @id @default(autoincrement())
+  title        String
+  slug         String   @unique
+  category     String // Proyek / Workshop / Seminar / CSR / Visit / Training
+  date         DateTime
+  location     String
+  client       String?
+  thumbnail    String   @db.Text
+  gallery      String   @default("[]") @db.Text // JSON string array
+  description  String   @db.Text
+  participants Int?
+  capacity     String? // e.g. "2.5 MWp" or "100 kWp"
+  isPublished  Boolean  @default(true)
+  isFeatured   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Testimonial {
+  id        Int      @id @default(autoincrement())
+  name      String
+  position  String
+  company   String?
+  avatar    String?  @db.Text
+  rating    Int      @default(5)
+  content   String   @db.Text
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model GlobalSetting {
+  id              Int      @id @default(1) // Singleton pattern
+  companyName     String   @default("Strum Technology Asia")
+  tagline         String   @default("Powering a Brighter Future")
+  heroTitle       String   @default("Solusi Kelistrikan & Energi Terbarukan Terpercaya")
+  heroSubtitle    String   @default("Kami menyediakan layanan instalasi panel surya, sistem kelistrikan industri, dan solusi energi berkelanjutan untuk masa depan Anda.") @db.Text
+  contactPhone    String   @default("+62 812-3456-7890")
+  contactEmail    String   @default("info@strumtechnology.co.id")
+  whatsappNumber  String   @default("6281234567890")
+  address         String   @default("Jl. Kelistrikan No. 88, Jakarta, Indonesia") @db.Text
+  socialInstagram String   @default("https://instagram.com/strumtechnology")
+  socialLinkedIn  String   @default("https://linkedin.com/company/strumtechnology")
+  socialYouTube   String   @default("https://youtube.com/strumtechnology")
+  statsProjects   Int      @default(150)
+  statsCapacity   String   @default("2.5 MWp")
+  statsYears      Int      @default(10)
+  statsClients    Int      @default(200)
+  seoTitle        String   @default("Strum Technology Asia")
+  seoDescription  String   @default("Solusi kelistrikan, sistem panel surya PLTS, dan energi terbarukan terbaik di Indonesia.") @db.Text
+  ogImage         String   @default("/og-image.jpg") @db.Text
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model ContactInquiry {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  phone       String
+  serviceType String
+  city        String
+  message     String   @db.Text
+  status      String   @default("NEW") // NEW, READ, RESPONDED
+  createdAt   DateTime @default(now())
+}
