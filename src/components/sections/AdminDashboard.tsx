@@ -589,42 +589,50 @@ export default function AdminDashboard({
               </div>
             )}
           </div>
- 
-          {/* Desktop Tabs List - hidden on mobile */}
-          <TabsList className="hidden md:flex bg-strum-dark-sec border border-strum-dark-ter h-auto gap-1.5 p-1 rounded-xl w-fit">
-            <TabsTrigger value="overview" className="text-xs uppercase tracking-wider font-semibold py-2 px-4 rounded-lg data-[state=active]:bg-strum-orange data-[state=active]:text-white">
-              <LayoutGrid className="w-3.5 h-3.5 mr-2" />
-              Ringkasan
-            </TabsTrigger>
-            <TabsTrigger value="services" className="text-xs uppercase tracking-wider font-semibold py-2 px-4 rounded-lg data-[state=active]:bg-strum-orange data-[state=active]:text-white">
-              <FileText className="w-3.5 h-3.5 mr-2" />
-              Layanan
-            </TabsTrigger>
-            <TabsTrigger value="activities" className="text-xs uppercase tracking-wider font-semibold py-2 px-4 rounded-lg data-[state=active]:bg-strum-orange data-[state=active]:text-white">
-              <Calendar className="w-3.5 h-3.5 mr-2" />
-              Kegiatan
-            </TabsTrigger>
-            <TabsTrigger value="testimonials" className="text-xs uppercase tracking-wider font-semibold py-2 px-4 rounded-lg data-[state=active]:bg-strum-orange data-[state=active]:text-white">
-              <Users className="w-3.5 h-3.5 mr-2" />
-              Testimoni
-            </TabsTrigger>
-            <TabsTrigger value="inquiries" className="text-xs uppercase tracking-wider font-semibold py-2 px-4 rounded-lg data-[state=active]:bg-strum-orange data-[state=active]:text-white">
-              <MessageSquare className="w-3.5 h-3.5 mr-2" />
-              Inquiry
-              {inquiries.filter((inq) => inq.status === 'NEW').length > 0 && (
-                <span className="ml-1.5 bg-strum-orange text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
-                  {inquiries.filter((inq) => inq.status === 'NEW').length}
-                </span>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="text-xs uppercase tracking-wider font-semibold py-2 px-4 rounded-lg data-[state=active]:bg-strum-orange data-[state=active]:text-white">
-              <Settings className="w-3.5 h-3.5 mr-2" />
-              Pengaturan
-            </TabsTrigger>
-          </TabsList>
 
-          {/* TAB 1: OVERVIEW */}
-          <TabsContent value="overview">
+          {/* Desktop Modern Capsule Tabs Navigation */}
+          <div className="hidden md:flex bg-strum-dark-sec border border-strum-dark-ter backdrop-blur-md rounded-full p-1.5 shadow-xl w-fit">
+            {[
+              { val: 'overview', label: 'Ringkasan', icon: <LayoutGrid className="w-4 h-4" /> },
+              { val: 'services', label: 'Layanan', icon: <FileText className="w-4 h-4" /> },
+              { val: 'activities', label: 'Kegiatan', icon: <Calendar className="w-4 h-4" /> },
+              { val: 'testimonials', label: 'Testimoni', icon: <Users className="w-4 h-4" /> },
+              {
+                val: 'inquiries',
+                label: 'Inquiry',
+                icon: <MessageSquare className="w-4 h-4" />,
+                count: inquiries.filter((inq) => inq.status === 'NEW').length,
+              },
+              { val: 'settings', label: 'Pengaturan', icon: <Settings className="w-4 h-4" /> },
+            ].map((opt) => (
+              <button
+                key={opt.val}
+                type="button"
+                onClick={() => setActiveTab(opt.val)}
+                className={`font-bold text-xs py-2 px-5 rounded-full flex items-center gap-2 transition-all duration-200 cursor-pointer border-none outline-none hover:text-white hover:scale-[1.02] active:scale-[0.98] ${
+                  activeTab === opt.val
+                    ? 'bg-strum-orange text-white shadow-lg shadow-strum-orange/20'
+                    : 'bg-transparent text-strum-text-sec hover:bg-white/5'
+                }`}
+              >
+                <span className={`transition-colors ${activeTab === opt.val ? 'text-white' : 'text-strum-orange'}`}>
+                  {opt.icon}
+                </span>
+                <span>{opt.label}</span>
+                {opt.count && opt.count > 0 ? (
+                  <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded-full transition-all ${
+                    activeTab === opt.val ? 'bg-white text-strum-orange' : 'bg-strum-orange text-white'
+                  }`}>
+                    {opt.count}
+                  </span>
+                ) : null}
+              </button>
+            ))}
+          </div>
+
+          {/* Right Content Panel Area */}
+          <div className="w-full">
+            <TabsContent value="overview">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
               <Card className="bg-strum-dark-sec border-strum-dark-ter">
                 <CardContent className="pt-6">
@@ -1064,8 +1072,9 @@ export default function AdminDashboard({
               </CardContent>
             </Card>
           </TabsContent>
-        </Tabs>
-      </main>
+        </div>
+      </Tabs>
+    </main>
 
       {/* --- DIALOG MODALS FOR CRUD --- */}
       {/* 1. SERVICE DIALOG */}

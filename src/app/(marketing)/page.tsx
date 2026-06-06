@@ -64,27 +64,27 @@ export default async function HomePage() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
-          {/* Left Column (Content) - spans 7 columns */}
+          {/* Left Column (Content) - spans 7 columnls */}
           <ScrollAnimate className="lg:col-span-7 flex flex-col items-start text-left gap-6" direction="right" duration={0.8}>
             {/* Badge pill */}
             <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-strum-orange/20 border border-strum-orange/30 text-strum-orange text-xs font-bold uppercase tracking-wider">
-              ⚡ {tagline}
+              {tagline}
             </div>
- 
+
             {/* Headline - extremely thick, sans-serif like the reference */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-[1.1] tracking-tight">
-              {heroTitle.split(' ').map((word: string, index: number) => 
+              {heroTitle.split(' ').map((word: string, index: number) =>
                 word.toLowerCase().includes('energi') || word.toLowerCase().includes('terpercaya') ? (
-                   <span key={index} className="text-strum-orange font-black">{word} </span>
+                  <span key={index} className="text-strum-orange font-black">{word} </span>
                 ) : `${word} `
               )}
             </h1>
- 
+
             {/* Subheadline */}
             <p className="text-sm sm:text-base md:text-lg text-strum-text-sec leading-relaxed max-w-xl">
               {heroSubtitle}
             </p>
- 
+
             {/* Action buttons */}
             <div className="flex flex-col sm:flex-row gap-4 mt-2 w-full sm:w-auto">
               <Link href="/layanan" className="w-full sm:w-auto">
@@ -100,7 +100,7 @@ export default async function HomePage() {
               </Link>
             </div>
           </ScrollAnimate>
- 
+
           {/* Right Column (Company Image Card) - spans 5 columns */}
           <ScrollAnimate className="lg:col-span-5 w-full flex justify-center lg:justify-end" direction="left" duration={0.8} delay={0.25}>
             <div className="relative w-full max-w-[450px] h-[320px] sm:h-[400px] rounded-[32px] overflow-hidden border border-white/10 shadow-2xl bg-zinc-900 group">
@@ -330,18 +330,18 @@ export default async function HomePage() {
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-strum-orange-dark to-strum-orange p-12 md:p-20 text-center flex flex-col items-center gap-6 shadow-2xl border border-strum-orange/20">
             {/* Backdrop overlay decoration */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,#ffffff18,transparent_50%)] pointer-events-none" />
-            
+
             {/* Large decorative white icon in the corner */}
             <Zap className="absolute -top-12 -right-12 w-72 h-72 text-white/10 -rotate-12 pointer-events-none" />
-            
+
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight max-w-3xl">
               Siap Beralih ke Energi Terbarukan & Hemat Listrik?
             </h2>
-            
+
             <p className="text-white/90 max-w-xl text-base sm:text-lg">
               Hubungi tim ahli kami untuk melakukan audit energi gratis atau rancang desain PLTS atap terbaik untuk properti Anda.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto">
               <Link href="/kontak" className="w-full sm:w-auto">
                 <Button className="w-full bg-white hover:bg-zinc-100 text-strum-orange-dark font-bold rounded-lg px-8 py-6 text-base transition-all hover:scale-105 border-none shadow-xl shadow-black/20">

@@ -166,9 +166,6 @@ export default function Footer({ settings = defaultSettings }: FooterProps) {
             &copy; {currentYear} {settings.companyName}. Hak Cipta Dilindungi Undang-Undang.
           </p>
           <div className="flex items-center gap-6 text-xs text-strum-text-muted">
-            <Link href="/admin/login" className="hover:text-strum-orange transition-colors">
-              CMS Admin
-            </Link>
             <Link href="#" className="hover:text-strum-orange transition-colors">
               Kebijakan Privasi
             </Link>
