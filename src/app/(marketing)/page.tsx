@@ -52,10 +52,10 @@ export default async function HomePage() {
         {/* Full-width blurred background image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=1920&q=80"
+            src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&w=1920&q=80"
             alt="Solar facility background"
             fill
-            className="object-cover blur-[3px] scale-105"
+            className="object-cover object-bottom"
             priority
           />
           {/* Deep dark blue-black gradient overlay to make text pop */}
