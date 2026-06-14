@@ -8,6 +8,8 @@ import LucideIcon from '@/components/ui/LucideIcon';
 import { Button } from '@/components/ui/button';
 import ScrollAnimate from '@/components/ui/ScrollAnimate';
 
+export const revalidate = 60; // Refresh data otomatis dari database setiap 60 detik
+
 export default async function HomePage() {
   // Query all database data in parallel
   const [settings, services, activities, testimonials] = await Promise.all([
