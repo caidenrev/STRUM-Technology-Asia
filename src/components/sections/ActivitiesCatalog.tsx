@@ -49,26 +49,22 @@ export default function ActivitiesCatalog({ initialActivities }: ActivitiesCatal
 
   return (
     <div className="flex flex-col gap-10">
-      {/* Search & Tabs Controls */}
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-        {/* Category Tabs */}
         <div className="flex flex-wrap gap-2 order-2 md:order-1">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 border ${
-                activeCategory === cat
-                  ? 'bg-strum-orange border-strum-orange text-white shadow-lg shadow-strum-orange/25'
-                  : 'bg-strum-dark-sec border-strum-dark-ter text-strum-text-sec hover:border-strum-text-muted hover:text-white'
-              }`}
+              className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 border ${activeCategory === cat
+                ? 'bg-strum-orange border-strum-orange text-white shadow-lg shadow-strum-orange/25'
+                : 'bg-strum-dark-sec border-strum-dark-ter text-strum-text-sec hover:border-strum-text-muted hover:text-white'
+                }`}
             >
               {cat}
             </button>
           ))}
         </div>
 
-        {/* Search Bar */}
         <div className="relative w-full md:max-w-xs order-1 md:order-2">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-strum-text-muted" />
           <Input
@@ -106,7 +102,6 @@ export default function ActivitiesCatalog({ initialActivities }: ActivitiesCatal
                 </div>
               </div>
 
-              {/* Content */}
               <div className="p-6 flex flex-col flex-grow gap-4">
                 <div className="flex items-center justify-between text-xs text-strum-text-muted">
                   <span className="flex items-center gap-1.5">
@@ -126,12 +121,11 @@ export default function ActivitiesCatalog({ initialActivities }: ActivitiesCatal
                 <h3 className="text-lg font-bold text-white group-hover:text-strum-orange transition-colors line-clamp-2">
                   {activity.title}
                 </h3>
-                
+
                 <p className="text-xs text-strum-text-muted line-clamp-3 leading-relaxed">
                   {activity.description}
                 </p>
 
-                {/* Link */}
                 <Link
                   href={`/kegiatan/${activity.slug}`}
                   className="mt-auto inline-flex items-center gap-1.5 text-xs font-bold text-strum-orange hover:text-strum-orange-dark group/link"
