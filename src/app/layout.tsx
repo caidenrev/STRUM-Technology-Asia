@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Strum Technology Asia",
   description: "Solusi kelistrikan, sistem panel surya PLTS, dan energi terbarukan terbaik di Indonesia.",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({

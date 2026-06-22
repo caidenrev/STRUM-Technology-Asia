@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Zap, Instagram, Linkedin, Youtube } from 'lucide-react';
+import Image from 'next/image';
+import { Mail, Phone, MapPin, Instagram, Linkedin, Youtube } from 'lucide-react';
 
 interface FooterProps {
   settings?: {
@@ -36,8 +37,8 @@ export default function Footer({ settings = defaultSettings }: FooterProps) {
           {/* Brand Col */}
           <div className="flex flex-col gap-4">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-lg bg-strum-orange flex items-center justify-center text-white">
-                <Zap className="w-5 h-5 fill-white" />
+              <div className="relative w-9 h-9">
+                <Image src="/logo.png" alt="Strum Logo" fill sizes="36px" className="object-contain" />
               </div>
               <div className="flex flex-col">
                 <span className="text-lg font-bold tracking-tight text-white">STRUM</span>

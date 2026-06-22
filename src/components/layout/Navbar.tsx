@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Zap, ChevronDown, LayoutGrid, Home, Building2, Factory, Cable } from 'lucide-react';
+import { Menu, X, ChevronDown, LayoutGrid, Home, Building2, Factory, Cable } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 
@@ -60,8 +61,8 @@ export default function Navbar() {
       >
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-lg bg-strum-orange flex items-center justify-center text-white transition-transform group-hover:scale-110">
-            <Zap className="w-5 h-5 fill-white" />
+          <div className="relative w-8 h-8 transition-transform group-hover:scale-110">
+            <Image src="/logo.png" alt="Strum Logo" fill sizes="32px" className="object-contain" />
           </div>
           <div className="flex flex-col">
             <span className="text-base font-bold tracking-tight text-white group-hover:text-strum-orange transition-colors">
