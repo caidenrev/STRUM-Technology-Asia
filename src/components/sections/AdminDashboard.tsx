@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Zap, LogOut, ShieldAlert, FileText, Calendar, Users, Settings, MessageSquare,
@@ -110,6 +110,34 @@ export default function AdminDashboard({
   initialInquiries,
 }: AdminDashboardProps) {
   const router = useRouter();
+
+  // Toast State
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+  const showToast = (message: string, type: 'success' | 'error') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
+
+  useEffect(() => {
+    setServices(initialServices);
+  }, [initialServices]);
+
+  useEffect(() => {
+    setActivities(initialActivities);
+  }, [initialActivities]);
+
+  useEffect(() => {
+    setTestimonials(initialTestimonials);
+  }, [initialTestimonials]);
+
+  useEffect(() => {
+    setInquiries(initialInquiries);
+  }, [initialInquiries]);
+
+  useEffect(() => {
+    if (initialSettings) setSettings(initialSettings);
+  }, [initialSettings]);
 
   // Collections States
   const [services, setServices] = useState<Service[]>(initialServices);
@@ -263,10 +291,15 @@ export default function AdminDashboard({
           setServices((prev) => [...prev, data.service]);
         }
         setActiveDialog('none');
+        showToast(editMode ? 'Layanan berhasil diperbarui!' : 'Layanan baru berhasil ditambahkan!', 'success');
         router.refresh();
+      } else {
+        const err = await res.json();
+        showToast(err.error || 'Gagal menyimpan layanan.', 'error');
       }
     } catch (err) {
       console.error(err);
+      showToast('Terjadi kesalahan sistem.', 'error');
     }
   };
 
@@ -276,10 +309,14 @@ export default function AdminDashboard({
       const res = await fetch(`/api/admin/services?id=${id}`, { method: 'DELETE' });
       if (res.ok) {
         setServices((prev) => prev.filter((s) => s.id !== id));
+        showToast('Layanan berhasil dihapus!', 'success');
         router.refresh();
+      } else {
+        showToast('Gagal menghapus layanan.', 'error');
       }
     } catch (err) {
       console.error(err);
+      showToast('Terjadi kesalahan sistem.', 'error');
     }
   };
 
@@ -343,10 +380,15 @@ export default function AdminDashboard({
           setActivities((prev) => [data.activity, ...prev]);
         }
         setActiveDialog('none');
+        showToast(editMode ? 'Kegiatan berhasil diperbarui!' : 'Kegiatan baru berhasil ditambahkan!', 'success');
         router.refresh();
+      } else {
+        const err = await res.json();
+        showToast(err.error || 'Gagal menyimpan kegiatan.', 'error');
       }
     } catch (err) {
       console.error(err);
+      showToast('Terjadi kesalahan sistem.', 'error');
     }
   };
 
@@ -356,10 +398,14 @@ export default function AdminDashboard({
       const res = await fetch(`/api/admin/activities?id=${id}`, { method: 'DELETE' });
       if (res.ok) {
         setActivities((prev) => prev.filter((a) => a.id !== id));
+        showToast('Kegiatan berhasil dihapus!', 'success');
         router.refresh();
+      } else {
+        showToast('Gagal menghapus kegiatan.', 'error');
       }
     } catch (err) {
       console.error(err);
+      showToast('Terjadi kesalahan sistem.', 'error');
     }
   };
 
@@ -413,10 +459,15 @@ export default function AdminDashboard({
           setTestimonials((prev) => [data.testimonial, ...prev]);
         }
         setActiveDialog('none');
+        showToast(editMode ? 'Testimoni berhasil diperbarui!' : 'Testimoni baru berhasil ditambahkan!', 'success');
         router.refresh();
+      } else {
+        const err = await res.json();
+        showToast(err.error || 'Gagal menyimpan testimoni.', 'error');
       }
     } catch (err) {
       console.error(err);
+      showToast('Terjadi kesalahan sistem.', 'error');
     }
   };
 
@@ -426,10 +477,14 @@ export default function AdminDashboard({
       const res = await fetch(`/api/admin/testimonials?id=${id}`, { method: 'DELETE' });
       if (res.ok) {
         setTestimonials((prev) => prev.filter((t) => t.id !== id));
+        showToast('Testimoni berhasil dihapus!', 'success');
         router.refresh();
+      } else {
+        showToast('Gagal menghapus testimoni.', 'error');
       }
     } catch (err) {
       console.error(err);
+      showToast('Terjadi kesalahan sistem.', 'error');
     }
   };
 
@@ -445,9 +500,13 @@ export default function AdminDashboard({
         setInquiries((prev) =>
           prev.map((inq) => (inq.id === id ? { ...inq, status: newStatus } : inq))
         );
+        showToast('Status inquiry berhasil diperbarui!', 'success');
+      } else {
+        showToast('Gagal memperbarui status inquiry.', 'error');
       }
     } catch (e) {
       console.error(e);
+      showToast('Terjadi kesalahan sistem.', 'error');
     }
   };
 
@@ -457,9 +516,13 @@ export default function AdminDashboard({
       const res = await fetch(`/api/admin/inquiries?id=${id}`, { method: 'DELETE' });
       if (res.ok) {
         setInquiries((prev) => prev.filter((inq) => inq.id !== id));
+        showToast('Inquiry berhasil dihapus!', 'success');
+      } else {
+        showToast('Gagal menghapus inquiry.', 'error');
       }
     } catch (e) {
       console.error(e);
+      showToast('Terjadi kesalahan sistem.', 'error');
     }
   };
 
@@ -476,16 +539,27 @@ export default function AdminDashboard({
       if (res.ok) {
         const data = await res.json();
         setSettings(data.settings);
-        alert('Pengaturan global berhasil disimpan.');
+        showToast('Pengaturan global berhasil disimpan!', 'success');
         router.refresh();
+      } else {
+        showToast('Gagal menyimpan pengaturan global.', 'error');
       }
     } catch (err) {
       console.error(err);
+      showToast('Terjadi kesalahan sistem.', 'error');
     }
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen relative">
+      {/* Toast Notification */}
+      {toast && (
+        <div className={`fixed top-4 right-4 z-50 px-4 py-3 rounded-lg shadow-xl text-sm font-bold flex items-center gap-2 transition-all transform duration-300 ${toast.type === 'success' ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'}`}>
+          {toast.type === 'success' ? <CheckCircle className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+          {toast.message}
+        </div>
+      )}
+
       {/* Header bar - responsive tweaks */}
       <header className="bg-strum-dark border-b border-strum-dark-ter px-4 sm:px-6 py-4 flex items-center justify-between shadow-md">
         <div className="flex items-center gap-2 sm:gap-3">
